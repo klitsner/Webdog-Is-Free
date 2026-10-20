@@ -68,7 +68,10 @@ function showCue(i, { silent = false } = {}) {
   if (cue.action === "shake") startShake();
   if (cue.action === "pah") pah();
   if (cue.action === "breakout") breakout();
-  else if (scene.mode === "free") speakBounce();
+  else if (scene.mode === "free") {
+    speakBounce();
+    closeMouthSoon();
+  }
 }
 
 function say(text) {
@@ -154,6 +157,15 @@ function setCaption(text) {
 function speakBounce() {
   const { scale, duration, ease } = SETTINGS.speak;
   gsap.fromTo(els.block, { scale }, { scale: 1, duration, ease, overwrite: "auto" });
+}
+
+// Once he's free (and the words are in the caption), his mouth closes shortly after each line.
+let mouthTimer = null;
+function closeMouthSoon() {
+  mouthTimer?.kill();
+  const { closeMouth, closeDelay } = SETTINGS.speak;
+  if (!closeMouth || dogState.mouth !== "open") return;
+  mouthTimer = gsap.delayedCall(closeDelay, () => Webdog.setState({ mouth: "closed" }));
 }
 
 ///////////////
@@ -252,7 +264,7 @@ function updateMouseLook() {
   if (!lookTurn) return;
   const { enabled, turn, tilt } = SETTINGS.mouseLook;
   const active = enabled && scene.mode === "free";
-  lookTurn(active ? -lookAt.x * turn : 0); // mouse to the right → face turns right
+  lookTurn(active ? lookAt.x * turn : 0); // mouse to the right → face turns right
   lookTilt(active ? -lookAt.y * tilt : 0); // mouse above → face tips up
 }
 

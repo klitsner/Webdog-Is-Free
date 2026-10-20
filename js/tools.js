@@ -153,9 +153,12 @@
       ],
     },
     {
-      title: "Talking bounce",
+      title: "Talking",
       section: "speak",
+      note: "Once he's free, each line opens his mouth; it closes after this delay.",
       controls: [
+        ["closeMouth", "Close mouth after each line", "checkbox"],
+        ["closeDelay", "Mouth closes after (s)", 0, 5, 0.05],
         ["scale", "Bounce size", 1, 1.3, 0.01],
         ["duration", "Bounce time (s)", 0.05, 2, 0.05],
         ["ease", "Bounce curve", "ease"],
