@@ -390,7 +390,7 @@ function breakout() {
       Webdog.setState({ mouth: "open" });
       setCaption("I’m freeeeee!");
       AudioFX.play("whoosh");
-      AudioFX.play("howl");
+      AudioFX.play("freeSong");
     }, null, "spin")
     .to(els.block, { rotationY: -360 * S.spin.turns, scaleX: 1, duration: S.spin.duration, ease: S.spin.ease }, "spin")
     .to(els.block, { z: 0, rotationX: 0, duration: S.spin.returnDuration, ease: S.spin.returnEase }, "spin+=0.3")

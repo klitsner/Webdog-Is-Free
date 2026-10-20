@@ -1,8 +1,8 @@
 // Webdog's sounds, using the Web Audio API.
 //
-// The sounds in sound/ are loaded up front. howl and birds are optional:
-// drop sound/howl.mp3 or sound/birds.mp3 into the repo and they're used
-// automatically; until then a synthesized version plays instead.
+// The sounds in sound/ are loaded up front. birds is optional: drop
+// sound/birds.mp3 into the repo and it's used automatically; until then
+// synthesized chirps play instead.
 
 const AudioFX = (() => {
   const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -20,13 +20,13 @@ const AudioFX = (() => {
     whine2: "sound/whine-2.mp3",
     whine3: "sound/whine-3.mp3",
     whine4: "sound/whine-4.mp3",
-    howl: "sound/howl.mp3",
+    freeSong: "sound/webdog-synth.wav", // "I'm freeeeee!" spin and celebration
     celebrate: "sound/stripes.wav", // the sunburst rays shooting out
     birds: "sound/birds.mp3"
   };
 
   // matches the original sketch (growl.amp(0.5), frustrated.amp(0.4))
-  const VOLUME = { growl: 0.5, frustrated: 0.4, howl: 0.9, birds: 0.2 };
+  const VOLUME = { growl: 0.5, frustrated: 0.4, birds: 0.2 };
   const WHINES = ["whine1", "whine2", "whine3", "whine4"];
 
   const buffers = {};
@@ -125,62 +125,6 @@ const AudioFX = (() => {
     osc.stop(start + duration + 0.05);
   }
 
-  // "Aroooooo": a rising, vibrato-y saw voice through a moving vowel formant.
-  function synthHowl() {
-    const t0 = ctx.currentTime + 0.02;
-    const dur = 3.3;
-
-    const out = ctx.createGain();
-    out.gain.setValueAtTime(0.0001, t0);
-    out.gain.exponentialRampToValueAtTime(0.35, t0 + 0.35);
-    out.gain.setValueAtTime(0.35, t0 + 2.3);
-    out.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-    out.connect(master);
-
-    const lowpass = ctx.createBiquadFilter();
-    lowpass.type = "lowpass";
-    lowpass.frequency.value = 2800;
-    lowpass.connect(out);
-
-    const formant = ctx.createBiquadFilter();
-    formant.type = "bandpass";
-    formant.Q.value = 1.4;
-    formant.frequency.setValueAtTime(600, t0);
-    formant.frequency.linearRampToValueAtTime(1150, t0 + 0.8);
-    formant.frequency.linearRampToValueAtTime(750, t0 + dur);
-    formant.connect(lowpass);
-
-    const vibrato = ctx.createOscillator();
-    const vibratoDepth = ctx.createGain();
-    vibrato.frequency.value = 5.5;
-    vibratoDepth.gain.setValueAtTime(0, t0);
-    vibratoDepth.gain.linearRampToValueAtTime(11, t0 + 1.0);
-    vibrato.connect(vibratoDepth);
-
-    const voices = [
-      { type: "sawtooth", detune: -7, gain: 0.5, to: formant },
-      { type: "sawtooth", detune: 7, gain: 0.5, to: formant },
-      { type: "sine", detune: 0, gain: 0.35, to: lowpass }
-    ];
-    voices.forEach((v) => {
-      const osc = ctx.createOscillator();
-      const g = ctx.createGain();
-      osc.type = v.type;
-      osc.detune.value = v.detune;
-      osc.frequency.setValueAtTime(250, t0);
-      osc.frequency.exponentialRampToValueAtTime(560, t0 + 0.7);
-      osc.frequency.linearRampToValueAtTime(600, t0 + 2.1);
-      osc.frequency.exponentialRampToValueAtTime(390, t0 + dur);
-      vibratoDepth.connect(osc.frequency);
-      g.gain.value = v.gain;
-      osc.connect(g).connect(v.to);
-      osc.start(t0);
-      osc.stop(t0 + dur + 0.1);
-    });
-    vibrato.start(t0);
-    vibrato.stop(t0 + dur + 0.1);
-  }
-
   // Little phrases of fast-sweeping sine chirps at random times, panned around the room.
   function synthBirds(bus) {
     function chirp(t, from, to, length, pan, volume) {
@@ -224,7 +168,7 @@ const AudioFX = (() => {
     [1568, 2093, 2637, 3136].forEach((f, i) => tone(f, t0 + i * 0.05, 0.35, "sine", 0.09));
   }
 
-  const SYNTH = { howl: synthHowl, twinkle: synthTwinkle };
+  const SYNTH = { twinkle: synthTwinkle };
 
   return { loaded, unlock, play, stop, startBirds };
 })();
