@@ -328,7 +328,7 @@ function breakout() {
 
   // 1. impact: the p5.js editor gets knocked back, then breaks away and falls out of view
   tl.addLabel("kick")
-    .call(() => AudioFX.play("bang"), null, "kick")
+    .call(() => AudioFX.play("breakout"), null, "kick")
     .to(els.world, { transformOrigin: "50% 50%", z: -S.kick.impact, duration: S.kick.impactDuration, ease: "power3.out" }, "kick")
     .addLabel("fall", `kick+=${S.kick.impactDuration}`)
     .to(

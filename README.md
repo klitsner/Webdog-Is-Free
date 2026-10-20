@@ -49,20 +49,25 @@ All of Webdog's lines, faces and sounds are in **`js/sequence.js`**, one object 
 - `eyebrows`: `neutral`, `curious`, `frown`
 - `cheeks`: `blush`, `none`
 - `mouth`: `open`, `closed`
-- `sound` (optional): `bark` is the default. Also `bark2`, `growl`, `frustrated`, `whine`, `howl`, `celebrate`, and `none`.
+- `sound` (optional): `bark` is the default. Also `bark2`, `growl`, `frustrated`, `whine`, `howl`, `breakout`, `celebrate`, and `none`.
 - `action` (optional): `shake` (the "Grrrr" cue), `pah` (the head snap) or `breakout` (the escape animation)
 
 ## Sounds
 
-The mp3s in `sound/` come from the original sketch. `sound/whoosh.wav` plays as the spin
-starts. Three sounds are optional:
+The mp3s in `sound/` come from the original sketch. Added sounds:
+
+- `sound/breakout.wav`: plays on "Pah." and again when he breaks out of the editor
+- `sound/whoosh.wav`: plays as the spin starts
+- `sound/stripes.wav`: plays as the sunburst rays shoot out
+
+Two sounds are optional:
 
 - `sound/howl.mp3`: plays during the spin ("I'm freeeeee!")
-- `sound/celebrate.mp3`: plays when the sunburst appears
 - `sound/birds.mp3`: a quiet loop after he escapes
 
-Until you add these files, the page synthesizes a howl, a fanfare and bird chirps with the
-Web Audio API. (The optional twinkle in the tool panel is always synthesized.) Add a file with the exact name above and the page uses it instead, with no
+Until you add these files, the page synthesizes a howl and bird chirps with the Web Audio
+API. (The optional twinkle in the tool panel is always synthesized.) Add a file with the
+exact name above and the page uses it instead, with no
 code changes. Volumes are in `VOLUME` in `js/audio.js`.
 
 ## Files

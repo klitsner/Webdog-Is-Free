@@ -9,19 +9,19 @@
 const DEFAULTS = {
   shake: { maxPx: 16, rampSec: 0.85, rumblePx: 4, settleSec: 0.6, tilt: 0.04 },
   pah: { angle: 28, z: -40, duration: 0.14, ease: "power4.out", settle: 0.75, settleDuration: 0.6, settleEase: "elastic.out(1, 0.4)" },
-  kick: { impact: 160, impactDuration: 0.08, x: 0, y: 110, z: -500, spinX: 35, spinY: 0, spinZ: -8, duration: 1.0, ease: "power2.in", sparkle: false },
+  kick: { impact: 160, impactDuration: 0.08, x: 0, y: 110, z: -500, spinX: 35, spinY: 0, spinZ: -8, duration: 1, ease: "power2.in", sparkle: false },
   drift: { delay: 0.05, z: -330, tilt: -9, duration: 1.1, ease: "back.out(1.4)" },
   look: { angle: 38, duration: 0.65, hold: 0.45, ease: "power2.inOut" },
   hop: { height: 22, duration: 0.18, ease: "power1.out" },
   windup: { angle: 48, squash: 0.96, duration: 0.8, ease: "power2.out" },
   spin: { turns: 4, duration: 4.6, ease: "power4.out", returnDuration: 3.4, returnEase: "power2.inOut" },
-  rays: { count: 24, start: 1.7, stagger: 0.06, duration: 0.5, ease: "power3.out", order: "clockwise" },
+  rays: { count: 36, start: 1.2, stagger: 0.015, duration: 1, ease: "sine.out", order: "clockwise" },
   float: { enabled: true, bob: 10, bobDuration: 2.4, sway: 6, swayDuration: 3.6, ease: "sine.inOut" },
-  mouseLook: { enabled: true, turn: 22, tilt: 12, smoothing: 0.6, ease: "power3.out" },
+  mouseLook: { enabled: true, turn: 52, tilt: 38, smoothing: 0.6, ease: "power3.out" },
   speak: { scale: 1.05, duration: 0.45, ease: "back.out(3)" },
   caption: { rise: 24, duration: 0.35, ease: "back.out(2)" },
-  size: { height: 56, maxWidth: 42, depth: 20, y: 44, perspective: 1400 },
-  shading: { side: 0.22, top: 0.26, bottom: 0.3, frontEdge: 0.12, rim: 0.18, ground: 0.28 },
+  size: { height: 56, maxWidth: 42, depth: 37, y: 47, perspective: 700 },
+  shading: { side: 0.52, top: 0.26, bottom: 0.3, frontEdge: 0.12, rim: 0.18, ground: 0.48 },
 };
 
 const SETTINGS_KEY = "webdog-settings";

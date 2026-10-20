@@ -5,7 +5,7 @@
 //         cheeks:   "blush", "none"
 //         mouth:    "open", "closed"
 // sound:  "bark" (default when omitted), "bark2", "growl", "frustrated",
-//         "whine", "howl", "celebrate", "none"
+//         "whine", "howl", "breakout", "celebrate", "none"
 // action: "shake"    – the whole page shakes (keeps rumbling through "pah")
 //         "pah"      – Webdog's face snaps its head back, out of the page
 //         "breakout" – the editor gets kicked off into space and Webdog floats free (one
@@ -32,7 +32,7 @@ const SEQUENCE = [
   { text: "Grrrr", state: { eyes: "sleeping", eyebrows: "frown", cheeks: "none", mouth: "closed" }, sound: "growl", action: "shake" },
 
   // he snaps his head back out of the page (still shaking)...
-  { text: "Pah.", state: { eyes: "sleeping", eyebrows: "frown", cheeks: "none", mouth: "open" }, sound: "bark2", action: "pah" },
+  { text: "Pah.", state: { eyes: "sleeping", eyebrows: "frown", cheeks: "none", mouth: "open" }, sound: "breakout", action: "pah" },
 
   // ...and kicks the whole editor off into space
   { text: "", sound: "none", action: "breakout" },

@@ -1,8 +1,8 @@
 // Webdog's sounds, using the Web Audio API.
 //
-// The mp3s in sound/ are loaded up front. howl, celebrate and birds are optional:
-// drop sound/howl.mp3, sound/celebrate.mp3 or sound/birds.mp3 into the repo and
-// they're used automatically; until then a synthesized version plays instead.
+// The sounds in sound/ are loaded up front. howl and birds are optional:
+// drop sound/howl.mp3 or sound/birds.mp3 into the repo and they're used
+// automatically; until then a synthesized version plays instead.
 
 const AudioFX = (() => {
   const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -14,19 +14,19 @@ const AudioFX = (() => {
     bark2: "sound/bark2.mp3",
     growl: "sound/growl.mp3",
     frustrated: "sound/frustratedGrowl.mp3",
-    bang: "sound/bang.mp3",
+    breakout: "sound/breakout.wav", // "Pah." and the moment he breaks out
     whoosh: "sound/whoosh.wav",
     whine1: "sound/whine-1.mp3",
     whine2: "sound/whine-2.mp3",
     whine3: "sound/whine-3.mp3",
     whine4: "sound/whine-4.mp3",
     howl: "sound/howl.mp3",
-    celebrate: "sound/celebrate.mp3",
+    celebrate: "sound/stripes.wav", // the sunburst rays shooting out
     birds: "sound/birds.mp3"
   };
 
   // matches the original sketch (growl.amp(0.5), frustrated.amp(0.4))
-  const VOLUME = { growl: 0.5, frustrated: 0.4, bang: 0.6, howl: 0.9, celebrate: 0.8, birds: 0.2 };
+  const VOLUME = { growl: 0.5, frustrated: 0.4, howl: 0.9, birds: 0.2 };
   const WHINES = ["whine1", "whine2", "whine3", "whine4"];
 
   const buffers = {};
@@ -181,22 +181,6 @@ const AudioFX = (() => {
     vibrato.stop(t0 + dur + 0.1);
   }
 
-  // Ta-da! A quick rising arpeggio, a bright chord and some sparkles.
-  function synthCelebrate() {
-    const t0 = ctx.currentTime + 0.02;
-    const bus = ctx.createGain();
-    bus.gain.value = 0.9;
-    bus.connect(master);
-
-    [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(f, t0 + i * 0.085, 0.22, "square", 0.07, bus));
-    [523.25, 1046.5, 1318.5, 1568].forEach((f) => tone(f, t0 + 0.36, 1.4, "triangle", 0.13, bus));
-    [1046.5, 1568].forEach((f) => tone(f, t0 + 0.36, 0.9, "square", 0.035, bus));
-
-    for (let i = 0; i < 12; i++) {
-      tone(2200 + Math.random() * 2600, t0 + 0.4 + Math.random() * 1.1, 0.12, "sine", 0.05, bus);
-    }
-  }
-
   // Little phrases of fast-sweeping sine chirps at random times, panned around the room.
   function synthBirds(bus) {
     function chirp(t, from, to, length, pan, volume) {
@@ -240,7 +224,7 @@ const AudioFX = (() => {
     [1568, 2093, 2637, 3136].forEach((f, i) => tone(f, t0 + i * 0.05, 0.35, "sine", 0.09));
   }
 
-  const SYNTH = { howl: synthHowl, celebrate: synthCelebrate, twinkle: synthTwinkle };
+  const SYNTH = { howl: synthHowl, twinkle: synthTwinkle };
 
   return { loaded, unlock, play, stop, startBirds };
 })();
