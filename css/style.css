@@ -1,0 +1,217 @@
+/* Stage, 3D Webdog block, sunburst and caption. Faux editor styles live in editor.css. */
+
+:root {
+  --purple: #800080;   /* Webdog's ears / nose: p5's "purple" */
+  --face: 480px;       /* block front size; set from JS (see layoutBlock in scene.js) */
+  --depth: 96px;       /* block thickness; set from JS */
+  --anchor-y: 44%;     /* where the block sits vertically once free */
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #1c1c1c;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background-color: #1c1c1c;
+  perspective: 1400px;
+  perspective-origin: 50% var(--anchor-y);
+}
+
+/* ---------- The editor world ---------- */
+
+#world {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transform-origin: 50% 100%;
+}
+
+/* ---------- Sunburst ---------- */
+
+#burst-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  visibility: hidden;
+  clip-path: circle(0% at 50% var(--anchor-y));
+}
+
+#burst {
+  position: absolute;
+  left: 50%;
+  top: var(--anchor-y);
+  width: 300vmax;
+  height: 300vmax;
+  margin-left: -150vmax;
+  margin-top: -150vmax;
+  display: block;
+}
+
+/* ---------- 3D block ---------- */
+
+#block-anchor {
+  position: absolute;
+  left: 50%;
+  top: var(--anchor-y);
+  width: 0;
+  height: 0;
+  z-index: 2;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+#block-float,
+#block {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-style: preserve-3d;
+}
+
+#block {
+  width: var(--face);
+  height: var(--face);
+  left: calc(var(--face) * -0.5);
+  top: calc(var(--face) * -0.5);
+  visibility: hidden;
+}
+
+/*
+  The front face sits at z = 0 and the block extends backwards to z = -depth,
+  so at the start of the breakout the front lines up exactly with the canvas's
+  old spot on the page.
+*/
+.block__face {
+  position: absolute;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.block__front {
+  left: 0;
+  top: 0;
+  width: var(--face);
+  height: var(--face);
+  overflow: hidden;
+  background: var(--face-color);
+}
+
+/* very light edge shading so the face reads as a solid slab */
+.block__front::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.12),
+    inset 0 0 calc(var(--face) * 0.05) rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+}
+
+.block__front canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.block__back {
+  left: 0;
+  top: 0;
+  width: var(--face);
+  height: var(--face);
+  background: var(--purple);
+  transform: translateZ(calc(var(--depth) * -1)) rotateY(180deg);
+}
+
+.block__left,
+.block__right {
+  top: 0;
+  width: var(--depth);
+  height: var(--face);
+  background: var(--purple);
+}
+
+.block__left {
+  left: calc(var(--depth) * -1);
+  transform-origin: right center;
+  transform: rotateY(-90deg);
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.08));
+}
+
+.block__right {
+  left: var(--face);
+  transform-origin: left center;
+  transform: rotateY(90deg);
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.2));
+}
+
+.block__top,
+.block__bottom {
+  left: 0;
+  width: var(--face);
+  height: var(--depth);
+  background-color: var(--face-color);
+}
+
+.block__top {
+  top: calc(var(--depth) * -1);
+  transform-origin: center bottom;
+  transform: rotateX(90deg);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.34));
+}
+
+.block__bottom {
+  top: var(--face);
+  transform-origin: center top;
+  transform: rotateX(-90deg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0.18));
+}
+
+/* soft contact shadow under the block on the white void */
+#block-shadow {
+  position: absolute;
+  width: calc(var(--face) * 0.9);
+  height: calc(var(--face) * 0.12);
+  left: calc(var(--face) * -0.45);
+  top: calc(var(--face) * 0.56);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(60, 0, 60, 0.28), rgba(60, 0, 60, 0));
+  visibility: hidden;
+}
+
+/* ---------- Caption ---------- */
+
+#caption {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 4.5vh;
+  z-index: 10;
+  width: fit-content;
+  max-width: 90vw;
+  margin: 0 auto;
+  padding: 0.3em 1em 0.35em;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--purple);
+  box-shadow: 0 6px 0 rgba(128, 0, 128, 0.25);
+  font-family: Montserrat, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 5.2vh, 72px);
+  line-height: 1.15;
+  text-align: center;
+  text-wrap: balance;
+  visibility: hidden;
+  pointer-events: none;
+}

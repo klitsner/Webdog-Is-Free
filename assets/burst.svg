@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-100 -100 200 200" preserveAspectRatio="xMidYMid slice">
+<!-- Radial sunburst: 24 alternating wedges that all meet at (0,0). Yellow is the base, pink wedges sit on top. -->
+<rect x="-300" y="-300" width="600" height="600" fill="#FFE11A"/>
+<g fill="#FF2D95">
+  <path d="M0 0L0.00 -300.00L77.65 -289.78Z"/>
+  <path d="M0 0L150.00 -259.81L212.13 -212.13Z"/>
+  <path d="M0 0L259.81 -150.00L289.78 -77.65Z"/>
+  <path d="M0 0L300.00 0.00L289.78 77.65Z"/>
+  <path d="M0 0L259.81 150.00L212.13 212.13Z"/>
+  <path d="M0 0L150.00 259.81L77.65 289.78Z"/>
+  <path d="M0 0L0.00 300.00L-77.65 289.78Z"/>
+  <path d="M0 0L-150.00 259.81L-212.13 212.13Z"/>
+  <path d="M0 0L-259.81 150.00L-289.78 77.65Z"/>
+  <path d="M0 0L-300.00 0.00L-289.78 -77.65Z"/>
+  <path d="M0 0L-259.81 -150.00L-212.13 -212.13Z"/>
+  <path d="M0 0L-150.00 -259.81L-77.65 -289.78Z"/>
+</g>
+</svg>

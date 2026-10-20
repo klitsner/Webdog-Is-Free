@@ -1,0 +1,570 @@
+/*
+  Faux p5.js web editor (dark theme).
+
+  Values are taken from the editor's own source, processing/p5.js-web-editor:
+  client/styles/abstracts/_variables.scss ($themes.dark) and the matching
+  component stylesheets (_nav, _toolbar, _editor, _console, _preview-frame,
+  _sidebar, _timer, _visibility-dropdown, VersionIndicator.jsx).
+  The editor's $base-font-size is 12px, so 1rem = 12px here.
+*/
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/montserrat-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Inconsolata";
+  src: url("../fonts/inconsolata-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-display: block;
+}
+
+:root {
+  /* dark theme */
+  --p5js-pink: #ed225d;
+  --background-color: #1c1c1c;          /* $darker */
+  --primary-text-color: #fff;
+  --secondary-text-color: #d9d9d9;      /* $medium-light */
+  --inactive-text-color: #a6a6a6;       /* $middle-light */
+  --nav-border-color: #666;             /* $middle-dark */
+  --ide-border-color: #666;
+  --toolbar-button-background-color: #4d4d4d; /* $medium-dark */
+  --toolbar-button-color: #fff;
+  --console-background-color: #333;
+  --console-header-background-color: #4d4d4d;
+  --console-input-background-color: #1c1c1c;
+  --activeline-background-color: #cfcfcf22;
+
+  /* syntax highlighting */
+  --hl-comment: #9b9b9b;
+  --hl-variable: #0f9dd7;
+  --hl-string: #58a10b;
+  --hl-number: #fdfdfd;
+  --hl-atom: #de4a9b;
+  --hl-keyword: #b58318;
+  --hl-operator: #b58318;
+  --hl-property: #fdfdfd;
+
+  /* The sketch's font-size preference (the screenshot uses a large projector size) */
+  --editor-font-size: 36px;
+  --console-height: 150px;
+}
+
+html {
+  font-size: 12px; /* the editor's $base-font-size; 1rem = 12px */
+}
+
+.app,
+.app * {
+  box-sizing: border-box;
+}
+
+.app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+  font-family: Montserrat, sans-serif;
+  font-size: 12px;
+}
+
+.app button {
+  font-family: Montserrat, sans-serif;
+  font-size: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--inactive-text-color);
+  cursor: pointer;
+}
+
+.app h2 {
+  margin: 0;
+}
+
+/* Scrollbar theming (non-touch devices) */
+@media (hover: hover) and (pointer: fine) {
+  .app ::-webkit-scrollbar { width: 10px; }
+  .app ::-webkit-scrollbar-thumb { background: #888; }
+  .app ::-webkit-scrollbar-thumb:hover { background: #555; }
+}
+
+/* ---------- Nav ---------- */
+
+.nav {
+  height: 42px;
+  flex: none;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed var(--nav-border-color);
+}
+
+.nav__items-left,
+.nav__items-right {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.nav__items-right {
+  padding-right: 20px;
+}
+
+.nav__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.nav__item button {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 12px 10px;
+}
+
+.nav__item-header-triangle {
+  margin-left: 5px;
+}
+
+.nav__item-header-triangle polygon {
+  fill: var(--inactive-text-color);
+}
+
+.nav__item:hover {
+  background-color: var(--p5js-pink);
+}
+
+.nav__item:hover .nav__item-header {
+  color: #fff;
+}
+
+.nav__item:hover .nav__item-header-triangle polygon {
+  fill: #fff;
+}
+
+.nav__item-logo {
+  position: relative;
+  height: 42px;
+  width: 56px;
+}
+
+.nav__item-logo span {
+  position: absolute;
+}
+
+.svg__logo {
+  display: block;
+  height: 42px;
+  background-color: var(--p5js-pink);
+}
+
+.svg__logo svg {
+  display: block;
+}
+
+/* ---------- Toolbar ---------- */
+
+.toolbar {
+  flex: none;
+  width: 100%;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px dashed var(--nav-border-color);
+}
+
+.toolbar__play-button,
+.toolbar__stop-button,
+.toolbar__preferences-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: none;
+  height: 44px;
+  width: 44px;
+  border-radius: 100%;
+  background-color: var(--toolbar-button-background-color) !important;
+}
+
+.toolbar__play-button svg,
+.toolbar__stop-button svg,
+.toolbar__preferences-button svg {
+  fill: var(--toolbar-button-color);
+}
+
+.toolbar__play-button {
+  padding: 0 0 0 3px;
+  margin-right: 15px;
+}
+
+.toolbar__play-button--selected {
+  background-color: var(--p5js-pink) !important;
+}
+
+.toolbar__stop-button {
+  padding: 0;
+  margin-right: 15px;
+}
+
+.toolbar__preferences-button {
+  padding: 0 0 0 1px;
+  margin-left: auto;
+}
+
+.toolbar__play-button:hover,
+.toolbar__stop-button:hover,
+.toolbar__preferences-button:hover {
+  background-color: var(--p5js-pink) !important;
+}
+
+.toolbar__autorefresh {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox__autorefresh {
+  margin: 0;
+  accent-color: var(--p5js-pink);
+}
+
+.toolbar__autorefresh-label {
+  color: var(--secondary-text-color);
+  margin-left: 5px;
+  font-size: 12px;
+}
+
+.toolbar__project-name-container {
+  margin-left: 10px;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.editable-input__label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--secondary-text-color);
+  font-size: 12px;
+}
+
+.editable-input__icon {
+  fill: var(--secondary-text-color);
+}
+
+.visibility-dropdown__trigger {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-right: 0.5rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 15px;
+  font-size: 14px !important;
+}
+
+.visibility-dropdown__trigger-toolbar {
+  color: var(--toolbar-button-color) !important;
+  background-color: var(--toolbar-button-background-color) !important;
+}
+
+.visibility-icon {
+  width: 16px;
+  height: 16px;
+  padding-bottom: 1px;
+  fill: var(--toolbar-button-color);
+}
+
+.version-indicator {
+  color: var(--toolbar-button-color) !important;
+  background-color: var(--toolbar-button-background-color) !important;
+  margin-left: 1rem;
+  margin-right: 1.2rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 10rem;
+}
+
+/* ---------- Panes ---------- */
+
+.editor-preview-container {
+  width: 100%;
+  flex: 1 0 0px;
+  display: flex;
+  position: relative;
+  min-height: 0;
+}
+
+.sidebar {
+  position: relative;
+  flex: none;
+  width: 20px;
+  height: 100%;
+}
+
+.sidebar__expand {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 25px;
+  width: 49px;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  background-color: var(--toolbar-button-background-color) !important;
+}
+
+.sidebar__expand polygon {
+  fill: var(--toolbar-button-color);
+}
+
+.sidebar__expand:hover {
+  background-color: var(--p5js-pink) !important;
+}
+
+.editor-console,
+.preview-frame-holder {
+  width: calc((100% - 20px) / 2);
+  flex: none;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-container {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+.editor__header {
+  height: 29px;
+}
+
+.editor__file-name {
+  color: var(--primary-text-color);
+  height: 29px;
+  padding-top: 7px;
+  padding-left: 56px;
+  padding-right: 168px;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.timer__saved-time {
+  color: var(--inactive-text-color);
+  font-size: 12px;
+  padding-right: 30px;
+}
+
+.editor-holder {
+  position: absolute;
+  top: 29px;
+  height: calc(100% - 29px);
+  width: 100%;
+  border: 1px solid var(--ide-border-color);
+}
+
+/* ---------- Code view (CodeMirror look-alike) ---------- */
+
+.cm-editor {
+  --gutter-width: calc(3ch + 8px);
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  font-family: Inconsolata, monospace;
+  font-size: var(--editor-font-size);
+  line-height: 1.2;
+  color: var(--primary-text-color);
+  background-color: var(--background-color);
+  padding-top: 25px;
+  /* gutter border, drawn the full height of the scrolled content */
+  background-image: linear-gradient(var(--ide-border-color), var(--ide-border-color));
+  background-size: 1px 100%;
+  background-position: var(--gutter-width) 0;
+  background-repeat: no-repeat;
+  background-attachment: local;
+}
+
+.cm-row {
+  display: flex;
+}
+
+.cm-gutter-cell {
+  flex: none;
+  width: var(--gutter-width);
+  padding: 0 3px 0 5px;
+  text-align: right;
+  color: var(--inactive-text-color);
+}
+
+.cm-line {
+  flex: 1;
+  min-width: 0;
+  margin-left: 1px;
+  padding: 0 4px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.cm-activeLine {
+  background-color: var(--activeline-background-color);
+}
+
+.cm-comment  { color: var(--hl-comment); }
+.cm-variable { color: var(--hl-variable); }
+.cm-string   { color: var(--hl-string); }
+.cm-number   { color: var(--hl-number); }
+.cm-atom     { color: var(--hl-atom); }
+.cm-keyword  { color: var(--hl-keyword); }
+.cm-operator { color: var(--hl-operator); }
+.cm-property { color: var(--hl-property); }
+.cm-p5-function { color: var(--hl-variable); font-weight: bold; }
+.cm-p5-variable { color: var(--hl-atom); }
+
+/* ---------- Console ---------- */
+
+.preview-console {
+  flex: none;
+  height: var(--console-height);
+  background: var(--console-background-color);
+  border-left: 1px solid var(--ide-border-color);
+  border-right: 1px solid var(--ide-border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-console__header {
+  background-color: var(--console-header-background-color);
+  color: #fff;
+  min-height: 30px;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.preview-console__header-title {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.preview-console__header-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.preview-console__clear {
+  color: var(--secondary-text-color) !important;
+  padding: 0 10px 0 0;
+}
+
+.preview-console__collapse {
+  padding: 3px 0 0;
+}
+
+.preview-console__collapse polygon {
+  fill: var(--secondary-text-color);
+}
+
+.preview-console__body {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 30px);
+}
+
+.preview-console__messages {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow-y: auto;
+  font-family: Inconsolata, monospace;
+  font-size: calc(var(--editor-font-size) * 0.55);
+  line-height: 1.2;
+}
+
+.console-message {
+  padding: 4px 10px;
+  border-bottom: 1px solid var(--ide-border-color);
+}
+
+.console__input {
+  width: 100%;
+  display: flex;
+  align-items: start;
+  min-height: calc(var(--editor-font-size) * 1.2 + 6px);
+  background-color: var(--console-input-background-color);
+}
+
+.console-active__arrow-container {
+  height: calc(var(--editor-font-size) * 1.2 + 6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.console-active__arrow {
+  height: 38%;
+  width: auto;
+}
+
+.console-active__arrow polygon {
+  fill: var(--secondary-text-color);
+}
+
+/* ---------- Preview ---------- */
+
+.preview-frame__header {
+  height: 29px;
+}
+
+.preview-frame__title {
+  color: var(--secondary-text-color);
+  height: 29px;
+  padding-top: 7px;
+  padding-left: 5px;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.preview-frame__content {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  /* the sketch's live background colour, so nothing changes when the canvas leaves */
+  background-color: var(--face-color, rgb(188, 65, 121));
+}
+
+.preview-frame__content canvas {
+  display: block;
+}
+
+/* The empty socket left behind when Webdog pulls his face out of the page */
+#preview-hole {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  background: #0b0b0b;
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.6),
+    inset 0 18px 40px rgba(0, 0, 0, 0.9),
+    inset 0 -6px 18px rgba(255, 255, 255, 0.06);
+}
