@@ -6,9 +6,10 @@
 //         mouth:    "open", "closed"
 // sound:  "bark" (default when omitted), "bark2", "growl", "frustrated",
 //         "whine", "howl", "celebrate", "none"
-// action: "shake"    – the whole page shakes (stays rumbling until the next click)
-//         "breakout" – Webdog pulls his canvas out of the page (one scripted animation;
-//                      "I'm freeeeee!" + howl + celebration happen inside it)
+// action: "shake"    – the whole page shakes (keeps rumbling through "pah")
+//         "pah"      – Webdog's face snaps its head back, out of the page
+//         "breakout" – the editor gets kicked off into space and Webdog floats free (one
+//                      scripted animation; "I'm freeeeee!" + howl + celebration happen inside it)
 
 const SEQUENCE = [
   // ---------- CONTAINED: inside the p5.js editor ----------
@@ -30,6 +31,10 @@ const SEQUENCE = [
 
   { text: "Grrrr", state: { eyes: "sleeping", eyebrows: "frown", cheeks: "none", mouth: "closed" }, sound: "growl", action: "shake" },
 
+  // he snaps his head back out of the page (still shaking)...
+  { text: "Pah.", state: { eyes: "sleeping", eyebrows: "frown", cheeks: "none", mouth: "open" }, sound: "bark2", action: "pah" },
+
+  // ...and kicks the whole editor off into space
   { text: "", sound: "none", action: "breakout" },
 
   // ---------- FREE: text now appears in the caption at the bottom of the screen ----------

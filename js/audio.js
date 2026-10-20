@@ -15,6 +15,7 @@ const AudioFX = (() => {
     growl: "sound/growl.mp3",
     frustrated: "sound/frustratedGrowl.mp3",
     bang: "sound/bang.mp3",
+    whoosh: "sound/whoosh.wav",
     whine1: "sound/whine-1.mp3",
     whine2: "sound/whine-2.mp3",
     whine3: "sound/whine-3.mp3",
@@ -124,13 +125,6 @@ const AudioFX = (() => {
     osc.stop(start + duration + 0.05);
   }
 
-  function noiseBuffer(seconds) {
-    const buffer = ctx.createBuffer(1, ctx.sampleRate * seconds, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
-    return buffer;
-  }
-
   // "Aroooooo": a rising, vibrato-y saw voice through a moving vowel formant.
   function synthHowl() {
     const t0 = ctx.currentTime + 0.02;
@@ -187,7 +181,7 @@ const AudioFX = (() => {
     vibrato.stop(t0 + dur + 0.1);
   }
 
-  // Ta-da! A quick rising arpeggio, a bright chord, a whoosh and some sparkles.
+  // Ta-da! A quick rising arpeggio, a bright chord and some sparkles.
   function synthCelebrate() {
     const t0 = ctx.currentTime + 0.02;
     const bus = ctx.createGain();
@@ -197,20 +191,6 @@ const AudioFX = (() => {
     [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(f, t0 + i * 0.085, 0.22, "square", 0.07, bus));
     [523.25, 1046.5, 1318.5, 1568].forEach((f) => tone(f, t0 + 0.36, 1.4, "triangle", 0.13, bus));
     [1046.5, 1568].forEach((f) => tone(f, t0 + 0.36, 0.9, "square", 0.035, bus));
-
-    const whoosh = ctx.createBufferSource();
-    whoosh.buffer = noiseBuffer(0.8);
-    const sweep = ctx.createBiquadFilter();
-    sweep.type = "bandpass";
-    sweep.Q.value = 0.9;
-    sweep.frequency.setValueAtTime(500, t0);
-    sweep.frequency.exponentialRampToValueAtTime(6000, t0 + 0.55);
-    const whooshGain = ctx.createGain();
-    whooshGain.gain.setValueAtTime(0.0001, t0);
-    whooshGain.gain.exponentialRampToValueAtTime(0.18, t0 + 0.12);
-    whooshGain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.75);
-    whoosh.connect(sweep).connect(whooshGain).connect(bus);
-    whoosh.start(t0);
 
     for (let i = 0; i < 12; i++) {
       tone(2200 + Math.random() * 2600, t0 + 0.4 + Math.random() * 1.1, 0.12, "sine", 0.05, bus);
@@ -254,7 +234,13 @@ const AudioFX = (() => {
     phrase();
   }
 
-  const SYNTH = { howl: synthHowl, celebrate: synthCelebrate };
+  // Video-game "ting" when the kicked-away editor vanishes.
+  function synthTwinkle() {
+    const t0 = ctx.currentTime + 0.01;
+    [1568, 2093, 2637, 3136].forEach((f, i) => tone(f, t0 + i * 0.05, 0.35, "sine", 0.09));
+  }
+
+  const SYNTH = { howl: synthHowl, celebrate: synthCelebrate, twinkle: synthTwinkle };
 
   return { loaded, unlock, play, stop, startBirds };
 })();

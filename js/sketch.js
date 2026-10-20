@@ -4,7 +4,7 @@
 //  - mouseX/mouseY became dogMouseX/dogMouseY, so the face can follow the mouse both
 //    inside the editor preview and later across the whole room;
 //  - the canvas can be moved out of the preview into the 3D block (Webdog.free);
-//  - text is only drawn in the canvas while he's still inside the editor;
+//  - text is only drawn in the canvas until the breakout;
 //  - cues/sounds/clicks live in sequence.js, audio.js and scene.js.
 
 let textX = 330;
@@ -41,6 +41,9 @@ let canvasMode = "contained";
 
 let previewEl;
 
+// Whether phrases are drawn inside the canvas (true until the breakout; then the caption takes over).
+let canvasText = true;
+
 //////////////
 ////////
 //////
@@ -74,6 +77,10 @@ function trackPointer(e) {
 
 // Called by scene.js
 const Webdog = {
+  setCanvasText(on) {
+    canvasText = on;
+  },
+
   setState(state) {
     Object.assign(dogState, state);
   },
@@ -97,6 +104,15 @@ const Webdog = {
     faceEl.appendChild(drawingContext.canvas);
   },
 
+  // Put the canvas back in the editor preview (used to replay the breakout).
+  contain() {
+    canvasMode = "contained";
+    canvasText = true;
+    pixelDensity(displayDensity());
+    previewEl.appendChild(drawingContext.canvas);
+    this.fitPreview();
+  },
+
   resize(w, h) {
     w = Math.round(w);
     h = Math.round(h);
@@ -116,7 +132,7 @@ function draw() {
   scale(sketchSize);
   drawBackground();
   drawDogFace();
-  if (canvasMode === "contained") {
+  if (canvasText) {
     displayPhrase();
   }
 }
