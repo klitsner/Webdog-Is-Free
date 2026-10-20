@@ -18,7 +18,7 @@ const DEFAULTS = {
   rays: { count: 36, start: 1.2, stagger: 0.015, duration: 1, ease: "sine.out", order: "clockwise" },
   float: { enabled: true, bob: 10, bobDuration: 2.4, sway: 6, swayDuration: 3.6, ease: "sine.inOut" },
   mouseLook: { enabled: true, turn: 52, tilt: 38, smoothing: 0.6, ease: "power3.out" },
-  speak: { scale: 1.05, duration: 0.45, ease: "back.out(3)", closeMouth: true, closeDelay: 0.5 },
+  speak: { scale: 1.05, duration: 0.6, ease: "power4.inOut", closeMouth: true, closeDelay: 0.8 },
   caption: { rise: 24, duration: 0.35, ease: "back.out(2)" },
   size: { height: 56, maxWidth: 42, depth: 37, y: 47, perspective: 700 },
   shading: { side: 0.52, top: 0.26, bottom: 0.3, frontEdge: 0.12, rim: 0.18, ground: 0.48 },
