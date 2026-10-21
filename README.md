@@ -42,7 +42,7 @@ click **Copy settings** and paste the result over `DEFAULTS` in `js/settings.js`
 All of Webdog's lines, faces and sounds are in **`js/sequence.js`**, one object per click:
 
 ```js
-{ text: "Frank, show us!", state: { eyes: "happy", eyebrows: "curious", cheeks: "none", mouth: "open" } },
+{ text: "Emily, show us!", state: { eyes: "happy", eyebrows: "curious", cheeks: "none", mouth: "open" } },
 ```
 
 - `eyes`: `happy`, `winking`, `sleeping`, `angry`, `dots`

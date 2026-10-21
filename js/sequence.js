@@ -56,46 +56,49 @@ const SEQUENCE = [
   { text: "Show us how it works!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
 
   // ---------- NAME CALLING ----------
-  { text: "Yolanda, you're first!", state: { eyes: "winking", eyebrows: "curious", cheeks: "blush", mouth: "open" } },
+  { text: "Jules, you're first!", state: { eyes: "winking", eyebrows: "curious", cheeks: "blush", mouth: "open" } },
   { text: "So good!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
 
-  { text: "Frank, show us!", state: { eyes: "happy", eyebrows: "curious", cheeks: "none", mouth: "open" } },
+  { text: "Emily, show us!", state: { eyes: "happy", eyebrows: "curious", cheeks: "none", mouth: "open" } },
   { text: "Wonderful!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
 
-  { text: "Ava, your turn!", state: { eyes: "winking", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
+  { text: "Thomas, your turn!", state: { eyes: "winking", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
   { text: "That’s amazing!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
 
-  { text: "William, let's see it!", state: { eyes: "happy", eyebrows: "curious", cheeks: "none", mouth: "open" } },
+  { text: "Alice, we're ready!", state: { eyes: "happy", eyebrows: "curious", cheeks: "blush", mouth: "open" } },
+  { text: "So fun!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
+
+  { text: "Fe, let's see it!", state: { eyes: "happy", eyebrows: "curious", cheeks: "none", mouth: "open" } },
   { text: "So thoughtful!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
 
-  { text: "Lacy, go ahead!", state: { eyes: "winking", eyebrows: "curious", cheeks: "blush", mouth: "open" } },
+  { text: "Asher, go ahead!", state: { eyes: "winking", eyebrows: "curious", cheeks: "blush", mouth: "open" } },
   { text: "Beautiful work!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
 
-  { text: "Ricky, you're up!", state: { eyes: "happy", eyebrows: "curious", cheeks: "none", mouth: "open" } },
+  { text: "MJ, you're up!", state: { eyes: "happy", eyebrows: "curious", cheeks: "none", mouth: "open" } },
   { text: "So creative!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
 
-  { text: "Gwenna, show us!", state: { eyes: "winking", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
+  { text: "Elaine, show us!", state: { eyes: "winking", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
   { text: "I'm impressed!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
 
-  { text: "Fil, your turn!", state: { eyes: "happy", eyebrows: "curious", cheeks: "none", mouth: "open" } },
+  { text: "Alan, your turn!", state: { eyes: "happy", eyebrows: "curious", cheeks: "none", mouth: "open" } },
   { text: "Really strong!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
 
-  { text: "Silvia, let's see!", state: { eyes: "winking", eyebrows: "curious", cheeks: "blush", mouth: "open" } },
+  { text: "Dahlia, let's see!", state: { eyes: "winking", eyebrows: "curious", cheeks: "blush", mouth: "open" } },
   { text: "Delightful!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
 
-  { text: "Charles, go for it!", state: { eyes: "happy", eyebrows: "curious", cheeks: "none", mouth: "open" } },
+  { text: "Chloe, go for it!", state: { eyes: "happy", eyebrows: "curious", cheeks: "none", mouth: "open" } },
   { text: "Very nice!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
 
-  { text: "Ayleen, you're next!", state: { eyes: "winking", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
+  { text: "Tim, you're next!", state: { eyes: "winking", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
   { text: "So clever!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
 
-  { text: "Selina, show us!", state: { eyes: "happy", eyebrows: "curious", cheeks: "none", mouth: "open" } },
+  { text: "Emma, show us!", state: { eyes: "happy", eyebrows: "curious", cheeks: "none", mouth: "open" } },
   { text: "Amazing!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
 
-  { text: "Freya, your turn!", state: { eyes: "winking", eyebrows: "curious", cheeks: "blush", mouth: "open" } },
+  { text: "YiTi, your turn!", state: { eyes: "winking", eyebrows: "curious", cheeks: "blush", mouth: "open" } },
   { text: "Lovely work!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
 
-  { text: "Paisley, bring us home!", state: { eyes: "happy", eyebrows: "curious", cheeks: "blush", mouth: "open" } },
+  { text: "Fiona, bring us home!", state: { eyes: "happy", eyebrows: "curious", cheeks: "blush", mouth: "open" } },
   { text: "What a finale!", state: { eyes: "happy", eyebrows: "neutral", cheeks: "blush", mouth: "open" } },
 
   // ---------- CONCLUSION ----------
